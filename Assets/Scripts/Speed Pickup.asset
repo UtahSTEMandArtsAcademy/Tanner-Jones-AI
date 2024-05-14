@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c403c6ce1f4ce44a9b86fd00806b405b, type: 3}
   m_Name: Speed Pickup
   m_EditorClassIdentifier: 
-  value: 116
-  valueTwo: 112
+  value: 100
+  valueTwo: 122

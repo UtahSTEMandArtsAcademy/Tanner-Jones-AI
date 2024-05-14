@@ -25,6 +25,7 @@ public class EnemyAI : MonoBehaviour
     //ublic int number;
     public Material mat, mat2, mat3;
     public Thought tot;
+    private Vector3 offset;
     //public GameObject[] target;
     // Start is called before the first frame update
     void Start()
@@ -76,7 +77,13 @@ public class EnemyAI : MonoBehaviour
                 {
                     agent.autoRepath = false;
                 }
-                agent.SetDestination(targ.transform.position + new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10))); //error nullref after a little bit
+                float timer = 5f;
+                timer =- Time.deltaTime;
+                if (timer < 0) {
+                    offset = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+                    timer = 5f;
+                }
+                agent.SetDestination(targ.transform.position + offset);
                 agent.speed = speed.value;
                 break;
 
@@ -103,15 +110,14 @@ public class EnemyAI : MonoBehaviour
 
 
 
-                Vector3 speculative = transform.position + (transform.position - targ1.transform.position);
+                Vector3 speculative = (transform.position + (transform.position - targ1.transform.position));
+              
+                
                 //agent.SetDestination(Quaternion.AngleAxis(Random.Range(-15f, 15f), ));   SetDestination requires a Vector
-                if (speculative.x <= 10 || speculative.z <= 10)
+                if (Mathf.Abs(speculative.x) <=  10|| Mathf.Abs(speculative.z) <= 10)
                 {
-                    agent.SetDestination(speculative + new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
-                    if (agent.velocity.x > 0 || agent.velocity.z > 0)
-                    {
-                        //this.gameObject.GetComponent<Renderer>().material.color = Color.cyan;
-                    }
+                    agent.SetDestination(speculative);
+                   
                 }
                 else
                 {
@@ -138,10 +144,12 @@ public class EnemyAI : MonoBehaviour
                 {
                     Vector3 wander = new Vector3(Random.Range(-50, 50), Random.Range(1, 22), Random.Range(-50, 50));
                     agent.SetDestination(wander);
-                    wait = 24f;
+                    wait = 10f;
                 }
                 GameObject targ2 = null;
+                GameObject targ3 = null;
                 GameObject[] ChaseObject2 = GameObject.FindGameObjectsWithTag("Chase");
+                GameObject[] ChaseObject3 = GameObject.FindGameObjectsWithTag("Chased");
                 for (int i = 0; i < ChaseObject2.Length; i++)
                 {
                     float NewDistance = Vector3.Distance(transform.position, ChaseObject2[i].transform.position);
@@ -151,13 +159,29 @@ public class EnemyAI : MonoBehaviour
                         targ2 = ChaseObject2[i];
                     }
                 }
-                    Vector3 speculative2 = transform.position + (transform.position - targ2.transform.position);
-                    //agent.SetDestination(Quaternion.AngleAxis(Random.Range(-15f, 15f), ));   SetDestination requires a Vector
-                    if (speculative2.x <= 10 || speculative2.z <= 10)
+                Vector3 speculative2 = transform.position + (transform.position - targ2.transform.position);
+                
+                //agent.SetDestination(Quaternion.AngleAxis(Random.Range(-15f, 15f), ));   SetDestination requires a Vector
+                if (Mathf.Abs(speculative2.x) <= 10 || Mathf.Abs(speculative2.z) <= 10)
                     {
                         tot = Thought.Running;
                     }
-                    break;
+
+                for (int i = 0; i < ChaseObject3.Length; i++)
+                {
+                    float NewDistance = Vector3.Distance(transform.position, ChaseObject3[i].transform.position);
+                    float distance = Vector3.Distance(transform.position, targ3?.transform.position ?? transform.position);
+                    if (distance == 0 || NewDistance <= distance)
+                    {
+                        targ3 = ChaseObject3[i];
+                    }
+                }
+                Vector3 speculative3 = transform.position + (transform.position - targ3.transform.position);
+                if (speculative3.x <= 10 || speculative3.z <= 10)
+                {
+                    agent.SetDestination(speculative3);
+                }
+                break;
                 
 
 

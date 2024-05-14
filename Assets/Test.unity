@@ -28803,13 +28803,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 8108563764783910780, guid: ddaaa24c7c6b54e749e87afeb978d0fb, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -41148,7 +41150,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 77bdd251dd3d04c469ff99e732e71ff4, type: 2}
   mat2: {fileID: 2100000, guid: db87d2a5ad7cc401fbcf03a4d9648b19, type: 2}
   mat3: {fileID: 2100000, guid: 3e05797000de74ceebd6b2b09490361a, type: 2}
-  tot: 1
+  tot: 2
 --- !u!135 &1222155937
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -41229,7 +41231,7 @@ Transform:
   m_GameObject: {fileID: 1222155933}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.89, y: 0.51, z: -0.24000096}
+  m_LocalPosition: {x: -58.68, y: 0.51, z: 25.22}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
