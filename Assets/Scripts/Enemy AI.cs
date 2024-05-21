@@ -15,6 +15,7 @@ public enum Thought {
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAI : MonoBehaviour
 {
+    public Stats Stats;
     //float closestDistance = Mathf.Infinity;
     private NavMeshAgent agent;
     //public Transform Target;
@@ -93,8 +94,14 @@ public class EnemyAI : MonoBehaviour
                 GameObject targ1 = null;
                 GameObject[] ChaseObject1 = GameObject.FindGameObjectsWithTag("Chase");
 
-
-
+                Stats.Day(Random.Range(1000, 10000), Random.Range(1000, 10000));
+                if (Stats.Dying == true)
+                {
+                    Destroy(this.gameObject);
+                    Stats.Dying = false;
+                    Stats.Food = 0;
+                    Stats.Water = 0;
+                }
                 for (int i = 0; i < ChaseObject1.Length; i++)
                 {
                     float NewDistance = Vector3.Distance(transform.position, ChaseObject1[i].transform.position);
@@ -137,6 +144,14 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case Thought.Wander:
+                Stats.Day(Random.Range(1000, 10000), Random.Range(1000, 10000));
+                if (Stats.Dying == true)
+                {
+                    Destroy(this.gameObject);
+                    Stats.Dying = false;
+                    Stats.Food = 0;
+                    Stats.Water = 0;
+                }
                 this.gameObject.GetComponent<Renderer>().material = mat3;
                 gameObject.tag = "Chased";
                 wait -= Time.deltaTime;
@@ -167,20 +182,7 @@ public class EnemyAI : MonoBehaviour
                         tot = Thought.Running;
                     }
 
-                for (int i = 0; i < ChaseObject3.Length; i++)
-                {
-                    float NewDistance = Vector3.Distance(transform.position, ChaseObject3[i].transform.position);
-                    float distance = Vector3.Distance(transform.position, targ3?.transform.position ?? transform.position);
-                    if (distance == 0 || NewDistance <= distance)
-                    {
-                        targ3 = ChaseObject3[i];
-                    }
-                }
-                Vector3 speculative3 = transform.position + (transform.position - targ3.transform.position);
-                if (speculative3.x <= 10 || speculative3.z <= 10)
-                {
-                    agent.SetDestination(speculative3);
-                }
+
                 break;
                 
 
